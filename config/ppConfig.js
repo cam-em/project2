@@ -40,7 +40,10 @@ passport.deserializeUser((id, doneCallback)=>{
 const findAndLogInUser = (email, password, doneCallback) =>{
     db.user.findOne({where:{email: email}}) // go check for a user in the db with that email
     .then(async foundUser=>{
-        let match = await foundUser.validPassword(password)
+        let match
+        if(foundUser){
+            match = await foundUser.validPassword(password)
+        }
         if(!foundUser || !match){ // something funky about the user
             console.log('password was NOT validated i.e. match is false')
             return doneCallback(null, false) // send back "false"
