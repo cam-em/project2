@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const db = require('../models')
+const passport = require('../config/ppConfig.js')
 
 router.get('/signup', (req, res)=>{
     res.render('auth/signup')
@@ -32,10 +33,9 @@ router.get('/login', (req, res)=>{
     res.render('auth/login')
 })
 
-router.post('/login', (req, res)=>{
-    console.log('Trying to log in with this input:', req.body)
-    //redirect to home route
-    res.redirect('/')
-})
+router.post('/login', passport.authenticate('local', {
+    failureRedirect: '/auth/login',
+    successRedirect: '/'
+}))
 
 module.exports = router
