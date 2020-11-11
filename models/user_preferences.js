@@ -9,12 +9,17 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            models.user_preferences.belongsTo(models.user);
+            models.user_preferences.belongsTo(models.user, {
+                foreignKey: "user_id",
+            });
         }
     }
     user_preferences.init(
         {
-            user_id: DataTypes.INTEGER,
+            user_id: {
+                type: DataTypes.INTEGER,
+                unique: true,
+            },
             measuring_unit: DataTypes.STRING,
         },
         {

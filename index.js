@@ -1,11 +1,13 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const axios = require("axios");
 const ejsLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const passport = require("./config/ppConfig.js");
 const flash = require("connect-flash");
 const isLoggedIn = require("./middleware/isLoggedIn");
+const db = require("./models");
 
 //  setup ejs and ejs layouts
 app.set("view engine", "ejs");
@@ -36,6 +38,7 @@ app.use((req, res, next) => {
     // this will give us access to these values in all our ejs pages
     res.locals.alerts = req.flash();
     res.locals.currentUser = req.user;
+    console.log(req.user_preferences);
     next(); // move on to the next piece of middleware
 });
 
@@ -48,6 +51,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/profile", isLoggedIn, (req, res) => {
+    console.log(req.user);
+    db.user_preferences.findAll().then((userPreferences) => {
+        console.log(userPreferences);
+    });
     res.render("profile");
 });
 

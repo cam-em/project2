@@ -1,1 +1,12 @@
-<h2><%= currentUser.name %>'s Profile </h2>
+<h2><%= currentUser.name %>'s Profile</h2>
+
+<h3>Preferences</h3>
+<form>
+    <label for="tempUnit">Temperature Format: </label>
+    <select id="measuring_unit" name="measuring_unit">
+        <option value="Fahrenheit">Fahrenheit</option>
+        <option value="Celsius">Celsius</option>
+    </select>
+</br>
+    <input type="submit" value="Update" />
+</form>
