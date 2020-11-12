@@ -1,7 +1,7 @@
 <h2><%= currentUser.name %>'s Profile</h2>
 
 <h3>Preferences</h3>
-<form>
+<form method="POST" action="/profile">
     <label for="tempUnit">Temperature Format: </label>
     <select id="measuring_unit" name="measuring_unit">
         <option value="Fahrenheit">Fahrenheit</option>

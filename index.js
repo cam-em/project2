@@ -38,7 +38,6 @@ app.use((req, res, next) => {
     // this will give us access to these values in all our ejs pages
     res.locals.alerts = req.flash();
     res.locals.currentUser = req.user;
-    console.log(req.user_preferences);
     next(); // move on to the next piece of middleware
 });
 
@@ -51,11 +50,21 @@ app.get("/", (req, res) => {
 });
 
 app.get("/profile", isLoggedIn, (req, res) => {
-    console.log(req.user);
-    db.user_preferences.findAll().then((userPreferences) => {
-        console.log(userPreferences);
-    });
     res.render("profile");
+});
+
+app.post("/profile", isLoggedIn, (req, res) => {
+    db.user_preferences
+        .upsert({
+            user_id: req.user.id,
+            measuring_unit: req.body.measuring_unit,
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    console.log(req.user.id);
+    console.log(req.body.measuring_unit);
+    res.redirect("/profile");
 });
 
 app.listen(process.env.PORT, () => {
