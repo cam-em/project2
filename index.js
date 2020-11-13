@@ -14,6 +14,7 @@ app.set("view engine", "ejs");
 app.use(ejsLayouts);
 
 // body parser middleware (this makes req.body work)
+app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: false }));
 
 // session middleware

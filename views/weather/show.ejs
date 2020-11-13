@@ -1,1 +1,24 @@
-<%= data.main.temp %>
+<body>
+    <div class="main-content">
+        <article class="widget">
+            <form class="weatherLocation" method="GET" action="/weather">
+                <label for="tempSearch"></label>
+                <input placeholder="Enter location.." type="text" name="city" />
+                <input type="submit" value="Search" />
+            </form>
+            <div class="weatherIcon"><i class="wi wi-day-cloudy"></i></div>
+            <div class="weatherInfo">
+                <div class="temperature">
+                    <span><%= parseInt(data.main.temp) %></span>
+                </div>
+                <div class="description">
+                    <div class="weatherCondition">
+                        <%= data.weather[0].description %>
+                    </div>
+                    <div class="place"><%= data.name %></div>
+                </div>
+            </div>
+            <div class="date"><%= moment().format('Do, MMMM'); %></div>
+        </article>
+    </div>
+</body>
