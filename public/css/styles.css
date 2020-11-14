@@ -2,7 +2,8 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css);
 /* $border-radius: 20px; */
 body {
-    color: #333333;
+    background-color: rgb(24, 26, 27);
+    color: white;
     font-family: Arial, Helvetica, sans-serif;
     max-width: 650px;
     margin: 0 auto;
@@ -29,6 +30,16 @@ header {
     height: 80px;
     display: flex;
     align-items: center;
+    box-shadow: 0 0 25px 0 black;
+}
+
+nav {
+    margin-left: 25%;
+}
+
+header img {
+    height: 100px;
+    margin-left: 40px;
 }
 
 header * {
@@ -40,7 +51,7 @@ header li {
 }
 
 header li a {
-    color: black;
+    color: white;
     text-decoration: none;
 }
 
@@ -70,7 +81,7 @@ h2 {
     width: 100%;
     justify-content: center;
     padding: 2rem;
-    background-color: #fafafa;
+    background-color: #1b1d1e;
 }
 
 .weatherLocation button {
@@ -82,19 +93,19 @@ h2 {
     outline: 0 none;
 }
 
-.widget .weatherIcon {
+.widget .temperature {
     flex: 1 100%;
     height: 60%;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    background: #fafafa;
+    background: #1b1d1e;
     font-family: weathericons;
     display: flex;
     align-items: center;
     justify-content: space-around;
     font-size: 100px;
 }
-.widget .weatherIcon i {
+.widget .temperature i {
     padding-top: 30px;
 }
 .widget .weatherInfo {
@@ -106,7 +117,7 @@ h2 {
     align-items: center;
     color: white;
 }
-.widget .weatherInfo .temperature {
+.widget .weatherInfo .weatherIcon {
     flex: 0 0 40%;
     width: 100%;
     font-size: 35px;
@@ -129,6 +140,14 @@ h2 {
 .widget .weatherInfo .description .place {
     font-size: 15px;
 }
+
+.place {
+    font-size: 30px;
+    background-color: #1b1d1e;
+    width: 650px;
+    text-align: center;
+    padding-top: 20px;
+}
 .widget .date {
     flex: 0 0 30%;
     height: 40%;
@@ -142,6 +161,9 @@ h2 {
     font-weight: 800;
 }
 
+.date span {
+    margin-left: 10px;
+}
 p {
     position: fixed;
     bottom: 0%;

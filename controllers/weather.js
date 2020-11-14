@@ -13,7 +13,7 @@ const weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=";
 router.use(express.urlencoded({ extended: true }));
 router.use(express.static(__dirname + "./public"));
 
-router.get("/", (req, res) => {
+router.get("/", isLoggedIn, (req, res) => {
     //console.log(process.env.API_KEY);
     const urlParam = req.query.city;
     if (urlParam !== undefined) {
@@ -21,6 +21,7 @@ router.get("/", (req, res) => {
         const country = urlParam.split(",")[1];
         console.log(city);
         console.log(country);
+        console.log("User ID:" + req.user.id);
         //Get data from API when search is clicked
         axios
             .get(

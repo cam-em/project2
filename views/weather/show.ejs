@@ -6,19 +6,22 @@
                 <input placeholder="Enter location.." type="text" name="city" />
                 <input type="submit" value="Search" />
             </form>
-            <div class="weatherIcon"><i class="wi wi-day-cloudy"></i></div>
+            <div class="place"><%= data.name %></div>
+            <div class="temperature">
+                <span><%= parseInt(data.main.temp) %>&#176;</span>
+            </div>
             <div class="weatherInfo">
-                <div class="temperature">
-                    <span><%= parseInt(data.main.temp) %></span>
-                </div>
+                <div class="weatherIcon"><i class="wi wi-day-cloudy"></i></div>
+
                 <div class="description">
                     <div class="weatherCondition">
                         <%= data.weather[0].description %>
                     </div>
-                    <div class="place"><%= data.name %></div>
                 </div>
             </div>
-            <div class="date"><%= moment().format('Do, MMMM'); %></div>
+            <div class="date">
+                <span><%= moment().format('Do MMMM'); %></span>
+            </div>
         </article>
     </div>
 </body>
