@@ -1,13 +1,20 @@
-<h2>Signup</h2>
-<form method="POST" action="/auth/signup">
-    <label for="new-name">Name</label>
-    <input type="text" name="name" id="new-name">
-
-    <label for="new-email">Email</label>
-    <input type="email" name="email" id="new-email">
-
-    <label for="new-password">Password</label>
-    <input type="password" name="password" id="new-password">
-
-    <input type="submit" value="Sign Up">
+<h2 class="register">Signup</h2>
+<form class="register" method="POST" action="/auth/signup">
+    <ul class="wrapper">
+        <li class="form-row">
+            <label for="new-name">Name</label>
+            <input type="text" name="name" id="new-name" />
+        </li>
+        <li class="form-row">
+            <label for="new-email">Email</label>
+            <input type="email" name="email" id="new-email" />
+        </li>
+        <li class="form-row">
+            <label for="new-password">Password</label>
+            <input type="password" name="password" id="new-password" />
+        </li>
+        <li class="form-row">
+            <input type="submit" value="Sign Up" />
+        </li>
+    </ul>
 </form>

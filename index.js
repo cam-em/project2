@@ -47,7 +47,7 @@ app.use("/auth", require("./controllers/auth.js"));
 app.use("/weather", require("./controllers/weather.js"));
 
 app.get("/", (req, res) => {
-    res.render("home");
+    res.redirect("/auth/login");
 });
 
 app.get("/profile", isLoggedIn, (req, res) => {
