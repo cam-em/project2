@@ -45,27 +45,10 @@ app.use((req, res, next) => {
 // use controllers
 app.use("/auth", require("./controllers/auth.js"));
 app.use("/weather", require("./controllers/weather.js"));
+app.use("/profile", require("./controllers/profile.js"));
 
 app.get("/", (req, res) => {
     res.redirect("/auth/login");
-});
-
-app.get("/profile", isLoggedIn, (req, res) => {
-    res.render("profile");
-});
-
-app.post("/profile", isLoggedIn, (req, res) => {
-    db.user_preferences
-        .upsert({
-            user_id: req.user.id,
-            measuring_unit: req.body.measuring_unit,
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    console.log(req.user.id);
-    console.log(req.body.measuring_unit);
-    res.redirect("/profile");
 });
 
 app.listen(process.env.PORT, () => {

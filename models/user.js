@@ -14,8 +14,11 @@ module.exports = (sequelize, DataTypes) => {
             models.user.hasOne(models.user_preferences, {
                 foreignKey: "user_id",
             });
-            models.user.hasMany(models.user_city, {
+            models.user.hasOne(models.user_city, {
                 foreignKey: "user_id",
+            });
+            models.user.hasMany(models.user_city, {
+                foreignKey: "city_id",
             });
         }
     }

@@ -80,9 +80,13 @@ router.get("/", isLoggedIn, async (req, res) => {
 
 router.post("/favorites", isLoggedIn, (req, res) => {
     console.log("Favorite test route: " + req.user.id);
-    db.user_city.findOrCreate({
-        where: { user_id: req.user.id, city_id: req.body.city_id },
-    });
+    db.user_city
+        .findOrCreate({
+            where: { user_id: req.user.id, city_id: req.body.city_id },
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     console.log("body: %j", req.body.city_id);
     res.send("THIS WORKS");
 });

@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
             models.city.belongsToMany(models.user, {
                 through: models.user_city,
+                foreignKey: "city_id",
+                otherKey: "user_id",
             });
         }
     }
