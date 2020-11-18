@@ -8,7 +8,10 @@
             </form>
             <div class="place"><%= data.name %></div>
             <div class="temperature">
-                <span><%= parseInt(data.main.temp) %>&#176;</span>
+                <span
+                    ><%= parseInt(data.main.temp) %>&#176; <%= abbreviation
+                    %></span
+                >
             </div>
             <div class="weatherInfo">
                 <div class="weatherIcon"><i class="wi wi-day-cloudy"></i></div>
@@ -23,13 +26,13 @@
                 <span><%= moment().format('Do MMMM'); %></span>
             </div>
         </article>
-        <form method="POST" class="addTo-btn" action="/weather/favorites">
+        <!---<form method="POST" class="addTo-btn" action="/weather/favorites">
             <input hidden type="text" name="city_id" value="<%=data.id%>" />
             <button
                 class="btn btn-primary"
                 id="addTo-btn"
                 type="submit"
             ></button>
-        </form>
+        </form>--->
     </div>
 </body>

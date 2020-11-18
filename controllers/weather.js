@@ -17,6 +17,7 @@ router.get("/", isLoggedIn, async (req, res) => {
     //console.log(process.env.API_KEY);
     const urlParam = req.query.city;
     let tempUnit;
+    let tempUnitAbreviation;
     //If there's no search just load generic search page
     //If there's a URL param, load the show.ejs with the following data
     if (urlParam !== undefined) {
@@ -32,10 +33,13 @@ router.get("/", isLoggedIn, async (req, res) => {
             .then((foundObject) => {
                 if (foundObject.measuring_unit === "Fahrenheit") {
                     tempUnit = "imperial";
+                    tempUnitAbreviation = "F";
                 } else if (foundObject.measuring_unit === "Celsius") {
                     tempUnit = "metric";
+                    tempUnitAbreviation = "C";
                 } else {
                     tempUnit = "imperial";
+                    tempUnitAbreviation = "F";
                 }
                 console.log("TEMP UNIT TEST: " + tempUnit);
             })
@@ -65,6 +69,7 @@ router.get("/", isLoggedIn, async (req, res) => {
                         res.render("./weather/show.ejs", {
                             data: response.data,
                             moment: moment,
+                            abbreviation: tempUnitAbreviation,
                         });
                     })
             );
