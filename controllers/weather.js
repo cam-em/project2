@@ -31,6 +31,7 @@ router.get("/", isLoggedIn, async (req, res) => {
         db.user_preferences
             .findOne({ where: { user_id: req.user.id } })
             .then((foundObject) => {
+                console.log(foundObject);
                 if (foundObject.measuring_unit === "Fahrenheit") {
                     tempUnit = "imperial";
                     tempUnitAbreviation = "F";
