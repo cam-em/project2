@@ -20,9 +20,17 @@ router.post("/signup", (req, res) => {
         .then(([createdUser, wasCreated]) => {
             if (wasCreated) {
                 console.log(`just created the following user:`, createdUser);
+                console.log("-------CREATED USER ID------: " + createdUser.id);
+                // Add user preference default as Fahrenheit for measuring unit
+                db.user_preferences.findOrCreate({
+                    where: {
+                        user_id: createdUser.id,
+                        measuring_unit: "Fahrenheit",
+                    },
+                });
                 // log the new user in
                 passport.authenticate("local", {
-                    successRedirect: "/",
+                    successRedirect: "/profile",
                     successFlash: "Account created and logged in!", // !-> FLASH <-!
                 })(req, res); // IIFE = immediately invoked function
             } else {

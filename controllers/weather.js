@@ -89,7 +89,19 @@ router.post("/favorites", isLoggedIn, (req, res) => {
             console.log(err);
         });
     console.log("body: %j", req.body.city_id);
-    res.send("THIS WORKS");
+    res.redirect("/weather/favorites");
+});
+
+router.get("/favorites", isLoggedIn, (req, res) => {
+    db.user_city
+        .findAll({ where: { user_id: req.user.id } })
+        .then((foundObjects) => {
+            console.log(
+                "FOUND OBJECTSSSSSSSSS: " +
+                    foundObjects[0].getDataValue("city_id")
+            );
+        });
+    res.send("THIS WORKS GET ROUTE");
 });
 
 module.exports = router;
