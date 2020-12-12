@@ -1,0 +1,29 @@
+<body>
+    <% data.forEach((data) => { %>
+        <div class="main-content">
+
+                <article class="widget">
+                    <div class="place"><%= data.name %></div>
+                    <div class="temperature">
+                        <span
+                            ><%= parseInt(data.main.temp) %>&#176; <%= abbreviation
+                            %></span
+                        >
+                    </div>
+                    <div class="weatherInfo">
+                        <div class="weatherIcon"><i class="wi wi-day-cloudy"></i></div>
+
+                        <div class="description">
+                            <div class="weatherCondition">
+                                <%= data.weather[0].description %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="date">
+                        <span><%= moment().format('Do MMMM'); %></span>
+                    </div>
+                </article>
+        </div>
+
+    <% }) %>
+</body>

@@ -22,7 +22,7 @@ router.get("/", isLoggedIn, (req, res) => {
     res.render("profile");
 });
 
-router.post("/", isLoggedIn, (req, res) => {
+router.put("/", isLoggedIn, (req, res) => {
     db.user_preferences
         .upsert({
             user_id: req.user.id,

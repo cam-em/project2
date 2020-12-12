@@ -8,12 +8,14 @@ const passport = require("./config/ppConfig.js");
 const flash = require("connect-flash");
 const isLoggedIn = require("./middleware/isLoggedIn");
 const db = require("./models");
+const methodOverride = require("method-override")
 
 //  setup ejs and ejs layouts
 app.set("view engine", "ejs");
 app.use(ejsLayouts);
 
 // body parser middleware (this makes req.body work)
+app.use(methodOverride("_method"))
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: false }));
 

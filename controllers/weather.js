@@ -13,21 +13,26 @@ const weatherUrl = "http://api.openweathermap.org/data/2.5/weather";
 router.use(express.urlencoded({ extended: true }));
 router.use(express.static(__dirname + "./public"));
 
+
+
+
+
 router.get("/", isLoggedIn, async (req, res) => {
+
     //console.log(process.env.API_KEY);
     const urlParam = req.query.city;
-    let tempUnit;
-    let tempUnitAbreviation;
     //If there's no search just load generic search page
     //If there's a URL param, load the show.ejs with the following data
     if (urlParam !== undefined) {
         const city = urlParam.split(",")[0];
         const country = urlParam.split(",")[1];
+        let tempUnit;
+        let tempUnitAbreviation;
         console.log(city);
         console.log(country);
         console.log("User ID:" + req.user.id);
-        //Load the user preferences and check whether it's Celsius or Fahrenheit
-        //If there's no preference selected, load Fahrenheit by default
+        // Load the user preferences and check whether it's Celsius or Fahrenheit
+        // If there's no preference selected, load Fahrenheit by default
         db.user_preferences
             .findOne({ where: { user_id: req.user.id } })
             .then((foundObject) => {
@@ -44,8 +49,8 @@ router.get("/", isLoggedIn, async (req, res) => {
                 }
                 console.log("TEMP UNIT TEST: " + tempUnit);
             })
+            .then(() => {
             //Pull weather data from API w/ city given in urlParam
-            .then(() =>
                 axios
                     .get(
                         `${weatherUrl}?q=${city},${country}&APPID=${process.env.API_KEY}&units=${tempUnit}`
@@ -73,7 +78,7 @@ router.get("/", isLoggedIn, async (req, res) => {
                             abbreviation: tempUnitAbreviation,
                         });
                     })
-            );
+                })
     } else {
         res.render("./weather/index.ejs");
     }
@@ -93,15 +98,49 @@ router.post("/favorites", isLoggedIn, (req, res) => {
 });
 
 router.get("/favorites", isLoggedIn, (req, res) => {
-    db.user_city
-        .findAll({ where: { user_id: req.user.id } })
-        .then((foundObjects) => {
-            console.log(
-                "FOUND OBJECTSSSSSSSSS: " +
-                    foundObjects[0].getDataValue("city_id")
-            );
-        });
-    res.send("THIS WORKS GET ROUTE");
+    cityDataArray = []
+    let tempUnit;
+    let tempUnitAbreviation;
+
+    db.user_preferences
+    .findOne({ where: { user_id: req.user.id } })
+    .then((foundObject) => {
+        console.log(foundObject);
+        if (foundObject.measuring_unit === "Fahrenheit") {
+            tempUnit = "imperial";
+            tempUnitAbreviation = "F";
+        } else if (foundObject.measuring_unit === "Celsius") {
+            tempUnit = "metric";
+            tempUnitAbreviation = "C";
+        } else {
+            tempUnit = "imperial";
+            tempUnitAbreviation = "F";
+        }
+        console.log("TEMP UNIT TEST: " + tempUnit);
+    })
+    .then(()=>{
+        db.user_city
+            .findAll({ where: { user_id: req.user.id } })
+            .then((foundObjects) => {
+                foundObjects.forEach(object => {
+                    console.log(object.getDataValue("city_id"))
+                    cityId = object.getDataValue("city_id")
+                    axios.get(`${weatherUrl}?id=${cityId}&APPID=${process.env.API_KEY}&units=${tempUnit}`)
+                    .then((cityData)=>{
+                        console.log(cityData.data)
+                        cityDataArray.push(cityData.data)
+                        console.log(cityDataArray)
+                        })
+                        .then(() => {
+                            res.render("./weather/favorites.ejs", {
+                                data: cityDataArray,
+                                moment: moment,
+                                abbreviation: tempUnitAbreviation,
+                        })
+                    })
+                });
+            });
+        })
 });
 
 module.exports = router;
