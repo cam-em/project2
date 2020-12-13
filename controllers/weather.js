@@ -7,6 +7,7 @@ const moment = require("moment");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 const weatherUrl = "http://api.openweathermap.org/data/2.5/weather";
+const groupUrl = "http://api.openweathermap.org/data/2.5/group"
 
 //const city = "Houston";
 //const country = "US";
@@ -122,22 +123,20 @@ router.get("/favorites", isLoggedIn, (req, res) => {
         db.user_city
             .findAll({ where: { user_id: req.user.id } })
             .then((foundObjects) => {
-                foundObjects.forEach(object => {
-                    console.log(object.getDataValue("city_id"))
-                    cityId = object.getDataValue("city_id")
-                    axios.get(`${weatherUrl}?id=${cityId}&APPID=${process.env.API_KEY}&units=${tempUnit}`)
-                    .then((cityData)=>{
-                        console.log(cityData.data)
-                        cityDataArray.push(cityData.data)
-                        console.log(cityDataArray)
-                        })
-                        .then(() => {
+                console.log("FOUND OBJECTS", foundObjects)
+                const cityIdsArray = foundObjects.map((obj) => {
+                    return obj.city_id
+                })
+                const cityIds = cityIdsArray.toString()
+                console.log("CITY IDS STRING", cityIds)
+                    axios.get(`${groupUrl}?id=${cityIds}&APPID=${process.env.API_KEY}&units=${tempUnit}`)
+                        .then((cityData) => {
+                            console.log(cityData.data.list)
                             res.render("./weather/favorites.ejs", {
-                                data: cityDataArray,
+                                data: cityData.data.list,
                                 moment: moment,
                                 abbreviation: tempUnitAbreviation,
                         })
-                    })
                 });
             });
         })

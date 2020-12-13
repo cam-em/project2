@@ -1,7 +1,7 @@
 <body>
-    <% data.forEach((data) => { %>
-        <div class="main-content">
 
+        <div class="main-content">
+            <% data.forEach((data) => { %>
                 <article class="widget">
                     <div class="place"><%= data.name %></div>
                     <div class="temperature">
@@ -23,7 +23,8 @@
                         <span><%= moment().format('Do MMMM'); %></span>
                     </div>
                 </article>
+            <% }) %>
         </div>
 
-    <% }) %>
+
 </body>

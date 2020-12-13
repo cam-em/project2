@@ -4,6 +4,7 @@
 <form method="POST" action="/profile?_method=PUT">
     <label for="tempUnit">Temperature Format: </label>
     <select id="measuring_unit" name="measuring_unit">
+        <option hidden value='<%= data.measuringUnit %>'> <%= data %> </option>
         <option value="Fahrenheit">Fahrenheit</option>
         <option value="Celsius">Celsius</option>
     </select>
